@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Surprise pour Jihane - Jeu 2</title>
+    <style>
+        body {
+            background-color: #ffe6e6;
+            color: #333;
+            font-family: 'Times New Roman';
+            text-align: center;
+            padding: 20px;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        h1 {
+            font-size: 3em;
+            color: #ff6666;
+        }
+        #snake-game {
+            margin-top: 20px;
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
+            border: 2px solid #ff6666;
+            background-color: #fff;
+        }
+        #score {
+            font-size: 1.5em;
+            color: #333;
+            margin-top: 20px;
+        }
+        .controls {
+            margin-top: 30px;
+        }
+        .controls button {
+            width: 60px;
+            height: 60px;
+            font-size: 1.5em;
+            background-color: #ff6666;
+            color: #fff;
+            border: none;
+            border-radius: 10px;
+            margin: 10px;
+        }
+        .controls button:active {
+            background-color: #ff3333;
+        }
+        .controls .up {
+            display: block;
+            margin: 0 auto;
+        }
+        .controls .left, .controls .right {
+            display: inline-block;
+        }
+        #start-button {
+            padding: 10px 20px;
+            font-size: 1.5em;
+            color: #fff;
+            background-color: #ff6666;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-top: 20px;
+        }
+        .page-selector {
+            margin-top: 50px;
+            font-size: 1.2em;
+        }
+        .page-selector a {
+            margin: 0 10px;
+            text-decoration: none;
+            color: #ff6666;
+            border: 1px solid #ff6666;
+            padding: 5px 10px;
+            border-radius: 5px;
+            background-color: #fff;
+        }
+        .page-selector a:hover {
+            background-color: #ffcccc;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Jeu 2 - Snake</h1>
+        <button id="start-button">Jouer</button>
+        <canvas id="snake-game" width="400" height="400"></canvas>
+        <div id="score">Score: 0</div>
+
+        <div class="controls">
+            <button class="up">↑</button>
+            <div>
+                <button class="left">←</button>
+                <button class="right">→</button>
+            </div>
+            <button class="down">↓</button>
+        </div>
+
+        <div class="page-selector">
+            <a href="index.html">Accueil</a>
+        </div>
+    </div>
+
+    <script>
+        let canvas = document.getElementById('snake-game');
+        let ctx = canvas.getContext('2d');
+        let grid = 20;
+        let count = 0;
+        let snake = [{x: 160, y: 160}, {x: 140, y: 160}, {x: 120, y: 160}, {x: 100, y: 160}];
+        let direction = 'right';
+        let food = {x: 320, y: 320};
+        let score = 0;
+        let gameInterval;
+
+        function randomFood(min, max) {
+            return Math.floor((Math.random() * (max - min) + min) / grid) * grid;
+        }
+
+        function generateFood() {
+            food.x = randomFood(0, canvas.width);
+            food.y = randomFood(0, canvas.height);
+        }
+
+        function updateScore() {
+            document.getElementById('score').textContent = 'Score: ' + score;
+        }
+
+        function gameLoop() {
+            if (++count < 2) {  // Slow down the snake's speed
+                return;
+            }
+
+            count = 0;
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+            let head = {x: snake[0].x, y: snake[0].y};
+
+            if (direction === 'left') head.x -= grid;
+            if (direction === 'up') head.y -= grid;
+            if (direction === 'right') head.x += grid;
+            if (direction === 'down') head.y += grid;
+
+            snake.unshift(head);
+
+            if (snake[0].x === food.x && snake[0].y === food.y) {
+                score++;
+                updateScore();
+                generateFood();
+            } else {
+                snake.pop();
+            }
+
+            ctx.fillStyle = '#ff6666';
+            snake.forEach(function(part) {
+                ctx.fillRect(part.x, part.y, grid, grid);
+            });
+
+            ctx.fillStyle = '#333';
+            ctx.fillRect(food.x, food.y, grid, grid);
+
+            if (head.x < 0 || head.x >= canvas.width || head.y < 0 || head.y >= canvas.height || snake.slice(1).some(part => part.x === head.x && part.y === head.y)) {
+                alert('Game Over! Score: ' + score);
+                clearInterval(gameInterval);
+                document.location.reload();
+            }
+        }
+
+        document.getElementById('start-button').addEventListener('click', function() {
+            gameInterval = setInterval(gameLoop, 100);
+        });
+
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'ArrowLeft' && direction !== 'right') direction = 'left';
+            if (e.key === 'ArrowUp' && direction !== 'down') direction = 'up';
+            if (e.key === 'ArrowRight' && direction !== 'left') direction = 'right';
+            if (e.key === 'ArrowDown' && direction !== 'up') direction = 'down';
+        });
+
+        document.querySelector('.up').addEventListener('click', function() {
+            if (direction !== 'down') direction = 'up';
+        });
+        document.querySelector('.down').addEventListener('click', function() {
+            if (direction !== 'up') direction = 'down';
+        });
+        document.querySelector('.left').addEventListener('click', function() {
+            if (direction !== 'right') direction = 'left';
+        });
+        document.querySelector('.right').addEventListener('click', function() {
+            if (direction !== 'left') direction = 'right';
+        });
+
+        generateFood();
+    </script>
+</body>
+</html>
