@@ -22,7 +22,11 @@
         }
 		h2 {
             font-size: 2em;
-            color: #000000;
+            color: #971e4e;
+        }
+		h3 {
+            font-size: 1.5em;
+            color: #a192cc;
         }
         .container {
             max-width: 800px;
@@ -84,6 +88,46 @@
         .btn:hover {
             background-color: #ff4d4d;
         }
+		#game-container {
+    margin-top: 50px;
+    text-align: center;
+		}
+
+		#game-area {
+			position: relative;
+			width: 100%;
+			height: 400px;
+			background-color: #ffe6e6;
+			border: 2px solid #ff6666;
+			overflow: hidden;
+			margin: 20px auto;
+			max-width: 600px;
+		}
+
+		.heart {
+			position: absolute;
+			width: 50px;
+			height: 50px;
+			background-image: url('https://pngfre.com/wp-content/uploads/balloon-poster.png'); /* Met ton image de cœur ici */
+			background-size: cover;
+			cursor: pointer;
+		}
+
+		#start-button {
+			padding: 10px 20px;
+			font-size: 1.2em;
+			background-color: #ff6666;
+			color: #fff;
+			border: none;
+			border-radius: 5px;
+			cursor: pointer;
+		}
+
+		#score {
+			font-size: 1.5em;
+			color: #333;
+		}
+		
     </style>
 </head>
 <body>
@@ -114,8 +158,8 @@
         <p class="message">Tu as atteint le bas de ma page j'espère qu'elle t'aura fait sourire.🍀</p>
         <img src="https://i.pinimg.com/originals/89/e1/8b/89e18b56ed118ac691fb9e6db21aa9dd.gif" alt="GIF chance" width="300" class="gif">
      <!-- Bouton pour déclencher le message et les feux d'artifice -->
-        <p> </p>
-		<p> </p>
+		<h3> et non c'est pas fini</h3>
+
 		<button class="btn" onclick="showAppreciation()">Appuie ici pour rejouer les feux d'artifice🎆 </button>
 	</div>
 	<!-- Bouton pour lancer les feux d'artifice -->
@@ -146,7 +190,7 @@
         }
 
         function showAppreciation() {
-            alert("Juste parce que je t'apprécie ");
+            alert("Juste parce que je t'apprécie ❤️");
             launchFireworks();
         }
 
@@ -154,6 +198,81 @@
         setTimeout(launchFireworks, 1000);
     </script>
 </script>
+<h3 color="green">toujours pas fini<h3/>
+<div class="container">
+    <!-- Contenu existant -->
+	<h1 align="left"> Voici si dessous un jeu 🎮 </h1>
+	<h2 align="right" font-size="2em"> touche les ballons le plus de fois possible </h2>
+</div>
+
+<!-- Mini-jeu -->
+<div id="game-container">
+    <button id="start-button">Start</button>
+    <div id="game-area">
+        <!-- Les cœurs apparaîtront ici -->
+    </div>
+    <p id="score">Score: 0</p>
+</div>
+
+<!-- Le reste de ton HTML -->
+<script>
+	document.addEventListener("DOMContentLoaded", function() {
+    const startButton = document.getElementById('start-button');
+    const gameArea = document.getElementById('game-area');
+    const scoreDisplay = document.getElementById('score');
+    let score = 0;
+    let gameActive = false;
+
+    function createHeart() {
+        const heart = document.createElement('div');
+        heart.classList.add('heart');
+        heart.style.top = Math.random() * (gameArea.offsetHeight - 50) + 'px';
+        heart.style.left = Math.random() * (gameArea.offsetWidth - 50) + 'px';
+
+        heart.addEventListener('click', function() {
+            gameArea.removeChild(heart);
+            score += 10;
+            scoreDisplay.textContent = 'Score: ' + score;
+        });
+
+        gameArea.appendChild(heart);
+
+        // Retire le cœur après 2 secondes s'il n'a pas été cliqué
+        setTimeout(function() {
+            if (gameArea.contains(heart)) {
+                gameArea.removeChild(heart);
+            }
+        }, 2000);
+    }
+
+    function startGame() {
+        score = 0;
+        scoreDisplay.textContent = 'Score: ' + score;
+        gameActive = true;
+
+        const gameInterval = setInterval(function() {
+            if (!gameActive) {
+                clearInterval(gameInterval);
+                return;
+            }
+            createHeart();
+        }, 1000);
+
+        // Arrête le jeu après 30 secondes
+        setTimeout(function() {
+            gameActive = false;
+            alert('Le jeu est terminé! Votre score est: ' + score);
+        }, 30000);
+    }
+
+    startButton.addEventListener('click', function() {
+        if (!gameActive) {
+            startGame();
+        }
+    });
+});
+</script>
+
 
 </body>
 </html>
