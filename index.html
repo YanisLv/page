@@ -3,12 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Surprise pour Jihane</title>
+    <title>Pour Toi, Jihane</title>
     <style>
         body {
             background-color: #ffe6e6;
             color: #333;
-            font-family: 'Times New Roman';
+            font-family: 'Times New Roman ';
             text-align: center;
             padding: 20px;
         }
@@ -70,6 +70,20 @@
             color: red;
             font-size: 1.5em;
         }
+		.btn {
+            background-color: #ff6666;
+            color: white;
+            padding: 10px 20px;
+            font-size: 1.5em;
+            border: none;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            cursor: pointer;
+            margin-top: 20px;
+        }
+        .btn:hover {
+            background-color: #ff4d4d;
+        }
     </style>
 </head>
 <body>
@@ -79,7 +93,7 @@
         <p class="message">Au lieu d'accepter les cookies veuillez acceptez ces fleurs</p>
         <img src="https://i.giphy.com/media/v1.Y2lkPTc5MGI3NjExM2EydjN5N29sbThmZzk0dG83cjNhNWFqYXNrdHI2YzZ2amVsbmN0diZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/UsTL1WhfyCf6AiHKEM/giphy.gif" alt="GIF d'amour" width='300' align="left" class="gif">
 	
-        <p class="message">Afin de poursuivre votre navigation, veuillez consulter une liste non exhaustive des qualités et défauts de la dite Meriem aka Jihane aka jiji </p>
+        <p class="message">Afin de poursuivre votre navigation, veuillez consulter une liste non exhaustive des qualités et défauts de la dite Meriem aka Jiahne aka jiji </p>
         <img src="https://i.giphy.com/media/v1.Y2lkPTc5MGI3NjExZzhod3I1aXllNDZ1bm9rcWx5a3phdG93MWF1OXhjY3hlbGhzN2JobiZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/3orifaGGghuf3hnmsE/giphy.gif" alt="GIF étoile" width='300' class="gif">
 	<h2 color="green">Les qualités</h2>
     <ul class="styled-list">
@@ -95,40 +109,50 @@
 		<li> y'en a pas </li>
 		
 		
-		<p align="left">Chaque jour je veux parler avec toi, j'apprécie le délire ou on est mené à chaque fois🚀 (ps : prends pas la conf et fais gaffe à toi je te le dis on va se battre toi et moi)</p>
+		<p font-family:"Algerian" align="left">Chaque jour je veux parler avec toi, j'apprécie le délire ou on est mené à chaque fois🚀 (ps : prends pas la conf et fais gaffe à toi je te le dis on va se battre toi et moi)</p>
 
         <p class="message">Tu as atteint le bas de ma page j'espère qu'elle t'aura fait sourire.🍀</p>
-        <img src="https://i.pinimg.com/originals/89/e1/8b/89e18b56ed118ac691fb9e6db21aa9dd.gif" alt="GIF chance" width ="300" class="gif">
-    </div>
-
+        <img src="https://i.pinimg.com/originals/89/e1/8b/89e18b56ed118ac691fb9e6db21aa9dd.gif" alt="GIF chance" width="300" class="gif">
+     <!-- Bouton pour déclencher le message et les feux d'artifice -->
+        <p> </p>
+		<p> </p>
+		<button class="btn" onclick="showAppreciation()">Appuie ici pour rejouer les feux d'artifice🎆 </button>
+	</div>
+	<!-- Bouton pour lancer les feux d'artifice -->
 	<script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.4.0/dist/confetti.browser.min.js"></script>
-		<script>
-    function launchFireworks() {
-        var duration = 5 * 1000;
-        var end = Date.now() + duration;
+	<script>
+        function launchFireworks() {
+            var duration = 5 * 1000;
+            var end = Date.now() + duration;
 
-        (function frame() {
-            confetti({
-                particleCount: 3,
-                angle: 60,
-                spread: 55,
-                origin: { x: 0 }
-            });
-            confetti({
-                particleCount: 3,
-                angle: 120,
-                spread: 55,
-                origin: { x: 1 }
-            });
+            (function frame() {
+                confetti({
+                    particleCount: 3,
+                    angle: 60,
+                    spread: 55,
+                    origin: { x: 0 }
+                });
+                confetti({
+                    particleCount: 3,
+                    angle: 120,
+                    spread: 55,
+                    origin: { x: 1 }
+                });
 
-            if (Date.now() < end) {
-                requestAnimationFrame(frame);
-            }
-        }());
-    }
+                if (Date.now() < end) {
+                    requestAnimationFrame(frame);
+                }
+            }());
+        }
 
-    // Lancer les feux d'artifice après un court délai pour que la page se charge
-    setTimeout(launchFireworks, 1000);
+        function showAppreciation() {
+            alert("Juste parce que je t'apprécie ❤️");
+            launchFireworks();
+        }
+
+        // Lancer les feux d'artifice après un court délai pour que la page se charge
+        setTimeout(launchFireworks, 1000);
+    </script>
 </script>
 
 </body>
